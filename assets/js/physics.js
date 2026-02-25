@@ -11,10 +11,14 @@ const Body = Matter.Body;
 let engine;
 let runner;
 
-function initPhysics(canvas) {
+function initPhysics(canvas, isMobile = false) {
     engine = Engine.create();
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 0;
+    
+    if (isMobile) {
+        engine.world.gravity.scale = 0.001;
+    }
     
     const render = Render.create({
         canvas: canvas,
@@ -35,11 +39,15 @@ function initPhysics(canvas) {
     return engine;
 }
 
-function createBall(x, y) {
-    const ball = Bodies.circle(x, y, 20, {
-        density: 0.001,
+function createBall(x, y, isMobile = false) {
+    const radius = isMobile ? 15 : 20;
+    const density = isMobile ? 0.0005 : 0.001;
+    const frictionAir = isMobile ? 0.005 : 0.01;
+    
+    const ball = Bodies.circle(x, y, radius, {
+        density: density,
         friction: 0.01,
-        frictionAir: 0.01,
+        frictionAir: frictionAir,
         restitution: 0.3,
         render: {
             fillStyle: '#3498db',
@@ -52,8 +60,9 @@ function createBall(x, y) {
     return ball;
 }
 
-function createHole(x, y, radius = 25) {
-    const hole = Bodies.circle(x, y, radius, {
+function createHole(x, y, radius = 25, isMobile = false) {
+    const holeRadius = isMobile ? 20 : radius;
+    const hole = Bodies.circle(x, y, holeRadius, {
         isStatic: true,
         isSensor: true,
         render: {
@@ -67,15 +76,17 @@ function createHole(x, y, radius = 25) {
     return hole;
 }
 
-function createWalls(wallsData) {
+function createWalls(wallsData, isMobile = false, scale = 1) {
     const walls = [];
     
     wallsData.forEach(wallData => {
+        const x = (wallData.x + wallData.width / 2) * scale;
+        const y = (wallData.y + wallData.height / 2) * scale;
+        const width = wallData.width * scale;
+        const height = wallData.height * scale;
+        
         const wall = Bodies.rectangle(
-            wallData.x + wallData.width / 2,
-            wallData.y + wallData.height / 2,
-            wallData.width,
-            wallData.height,
+            x, y, width, height,
             {
                 isStatic: true,
                 render: {

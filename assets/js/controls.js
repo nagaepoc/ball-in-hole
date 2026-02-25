@@ -4,10 +4,12 @@ let orientationHandler = null;
 let keyboardHandler = null;
 let mouseHandler = null;
 let currentGravity = { x: 0, y: 0 };
+let isMobile = false;
 const MAX_TILT = 45;
 const GRAVITY_SCALE = 0.001;
 
-function initControls(callback) {
+function initControls(callback, mobile = false) {
+    isMobile = mobile;
     setupDeviceOrientation(callback);
     setupKeyboardControls(callback);
     setupMouseControls(callback);
@@ -61,8 +63,9 @@ function calculateGravityFromOrientation(event) {
     beta = clamp(beta, -MAX_TILT, MAX_TILT);
     gamma = clamp(gamma, -MAX_TILT, MAX_TILT);
     
-    const x = (gamma / MAX_TILT) * GRAVITY_SCALE;
-    const y = (beta / MAX_TILT) * GRAVITY_SCALE;
+    const gravityScale = isMobile ? GRAVITY_SCALE * 2 : GRAVITY_SCALE;
+    const x = (gamma / MAX_TILT) * gravityScale;
+    const y = (beta / MAX_TILT) * gravityScale;
     
     return { x, y };
 }
@@ -74,7 +77,7 @@ function setupKeyboardControls(callback) {
         keys[e.key] = e.type === 'keydown';
         
         let x = 0, y = 0;
-        const force = 0.0005;
+        const force = isMobile ? 0.001 : 0.0005;
         
         if (keys['ArrowUp'] || keys['w'] || keys['W']) y = -force;
         if (keys['ArrowDown'] || keys['s'] || keys['S']) y = force;
@@ -181,7 +184,7 @@ function setupTouchControls(callback) {
         const dx = touchX - touchStartX;
         const dy = touchY - touchStartY;
         
-        const forceScale = 0.00002;
+        const forceScale = isMobile ? 0.00005 : 0.00002;
         const x = dx * forceScale;
         const y = dy * forceScale;
         

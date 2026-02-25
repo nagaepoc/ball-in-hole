@@ -96,6 +96,8 @@ class Game {
         this.lastBallPosition = { x: 0, y: 0 };
         this.isBallMoving = false;
         this.lastCollisionTime = 0;
+        this.gameScale = 1;
+        this.isMobile = false;
         
         this.currentLevel = 1;
         this.moves = 0;
@@ -135,19 +137,40 @@ class Game {
         const container = this.canvas.parentElement;
         const containerRect = container.getBoundingClientRect();
         
-        const maxWidth = Math.min(containerRect.width, 800);
-        const maxHeight = Math.min(containerRect.height, 600);
+        this.isMobile = window.innerWidth <= 768;
         
-        const scale = Math.min(maxWidth / 800, maxHeight / 600);
-        const width = 800 * scale;
-        const height = 600 * scale;
-        
-        this.canvas.width = width * dpr;
-        this.canvas.height = height * dpr;
-        
-        this.ctx.scale(dpr, dpr);
-        this.canvas.style.width = `${width}px`;
-        this.canvas.style.height = `${height}px`;
+        if (this.isMobile) {
+            const targetWidth = containerRect.width * 0.95;
+            const targetHeight = containerRect.height * 0.7;
+            
+            const width = Math.min(targetWidth, 800);
+            const height = Math.min(targetHeight, 600);
+            
+            this.canvas.width = width * dpr;
+            this.canvas.height = height * dpr;
+            
+            this.ctx.scale(dpr, dpr);
+            this.canvas.style.width = `${width}px`;
+            this.canvas.style.height = `${height}px`;
+            
+            this.gameScale = Math.min(width / 800, height / 600);
+        } else {
+            const maxWidth = Math.min(containerRect.width, 800);
+            const maxHeight = Math.min(containerRect.height, 600);
+            
+            const scale = Math.min(maxWidth / 800, maxHeight / 600);
+            const width = 800 * scale;
+            const height = 600 * scale;
+            
+            this.canvas.width = width * dpr;
+            this.canvas.height = height * dpr;
+            
+            this.ctx.scale(dpr, dpr);
+            this.canvas.style.width = `${width}px`;
+            this.canvas.style.height = `${height}px`;
+            
+            this.gameScale = scale;
+        }
         
         this.ctx.imageSmoothingEnabled = true;
         this.ctx.imageSmoothingQuality = 'high';
@@ -241,8 +264,8 @@ class Game {
     }
     
     startGame() {
-        this.engine = initPhysics(this.canvas);
-        initControls(this.handleOrientation.bind(this));
+        this.engine = initPhysics(this.canvas, this.isMobile);
+        initControls(this.handleOrientation.bind(this), this.isMobile);
         this.loadLevel(this.currentLevel);
         this.startTimer();
         this.gameRunning = true;
@@ -263,9 +286,14 @@ class Game {
     }
     
     createLevelObjects(level) {
-        this.ball = createBall(level.ballStart.x, level.ballStart.y);
-        this.hole = createHole(level.holePosition.x, level.holePosition.y, level.holePosition.radius);
-        this.walls = createWalls(level.maze);
+        const ballX = level.ballStart.x * this.gameScale;
+        const ballY = level.ballStart.y * this.gameScale;
+        const holeX = level.holePosition.x * this.gameScale;
+        const holeY = level.holePosition.y * this.gameScale;
+        
+        this.ball = createBall(ballX, ballY, this.isMobile);
+        this.hole = createHole(holeX, holeY, level.holePosition.radius, this.isMobile);
+        this.walls = createWalls(level.maze, this.isMobile, this.gameScale);
         
         this.drawStaticElements();
     }
