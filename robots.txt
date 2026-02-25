@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nagaepoc.github.io/ball-in-hole/sitemap.xml

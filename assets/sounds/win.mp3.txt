@@ -1,0 +1,19 @@
+PLACEHOLDER SOUND FILE - win.mp3
+
+This is a placeholder for the level complete/win sound effect.
+
+For a real deployment, you need to:
+1. Create or obtain a victory/level complete sound
+2. Save it as win.mp3 in this directory
+3. Ensure it's properly licensed for use
+
+Sound specifications:
+- Format: MP3 (or include OGG/WAV for browser compatibility)
+- Duration: 1-2 seconds
+- Content: Positive, rewarding sound for level completion
+- Volume: Medium, celebratory but not overwhelming
+
+Example characteristics:
+- Frequency: Can include higher frequencies (500-2000 Hz)
+- Should have a clear beginning and end
+- Positive tone (chime, fanfare, etc.)

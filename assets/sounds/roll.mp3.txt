@@ -1,0 +1,19 @@
+PLACEHOLDER SOUND FILE - roll.mp3
+
+This is a placeholder for the ball rolling sound effect.
+
+For a real deployment, you need to:
+1. Create or obtain a ball rolling sound effect
+2. Save it as roll.mp3 in this directory
+3. Ensure it's properly licensed for use
+
+Sound specifications:
+- Format: MP3 (or include OGG/WAV for browser compatibility)
+- Duration: 2-3 seconds, loopable
+- Content: Subtle rolling/ball movement sound
+- Volume: Low to medium, not intrusive
+
+Example characteristics:
+- Frequency: 100-500 Hz range
+- Should fade in/out smoothly
+- Loop point should be seamless

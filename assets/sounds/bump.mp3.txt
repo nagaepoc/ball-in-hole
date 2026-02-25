@@ -1,0 +1,19 @@
+PLACEHOLDER SOUND FILE - bump.mp3
+
+This is a placeholder for the wall collision sound effect.
+
+For a real deployment, you need to:
+1. Create or obtain a collision/bump sound
+2. Save it as bump.mp3 in this directory
+3. Ensure it's properly licensed for use
+
+Sound specifications:
+- Format: MP3 (or include OGG/WAV for browser compatibility)
+- Duration: 0.5-1 second
+- Content: Short impact/collision sound
+- Volume: Medium, should match impact intensity
+
+Example characteristics:
+- Frequency: Broad spectrum (100-1000 Hz)
+- Sharp attack, quick decay
+- Should vary slightly based on collision force

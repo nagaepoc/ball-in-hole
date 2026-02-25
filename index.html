@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="Ball in a Hole Maze PWA Game - Tilt-controlled ball maze game">
+    <meta name="theme-color" content="#2196f3">
+    
+    <title>Ball in a Hole Maze</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/images/icons/icon-192x192.png">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ball in a Hole Maze</h1>
+            <p class="subtitle">Tilt your device to roll the ball into the hole!</p>
+        </header>
+
+        <main>
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-label">Level:</span>
+                            <span id="level" class="stat-value">1</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Time:</span>
+                            <span id="timer" class="stat-value">00:00</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Moves:</span>
+                            <span id="moves" class="stat-value">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button id="reset-btn" class="btn">Reset Ball</button>
+                        <button id="level-btn" class="btn">Next Level</button>
+                        <button id="sound-btn" class="btn sound-btn">🔊 Sound On</button>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="800" height="600"></canvas>
+                    <div id="orientation-permission" class="permission-prompt">
+                        <p>This game uses device orientation for tilt controls.</p>
+                        <button id="permission-btn" class="btn">Allow Tilt Controls</button>
+                        <p class="fallback">Or use arrow keys on desktop</p>
+                    </div>
+                </div>
+
+                <div class="game-footer">
+                    <div class="instructions">
+                        <h3>How to Play:</h3>
+                        <ul>
+                            <li><strong>Mobile:</strong> Tilt your device to move the ball</li>
+                            <li><strong>Desktop:</strong> Use arrow keys or drag the ball</li>
+                            <li><strong>Goal:</strong> Get the blue ball into the black hole</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pwa-install">
+                        <button id="install-btn" class="btn install-btn">Install App</button>
+                        <p class="pwa-hint">Install for offline play</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="credits">
+                <p class="built-by">Built by <strong>Naga</strong></p>
+                <p class="contact">Contact: <a href="mailto:nagarjunajava10@gmail.com">nagarjunajava10@gmail.com</a></p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>Ball in a Hole Maze PWA Game &copy; 2026</p>
+                <p>Uses Matter.js physics engine</p>
+                <p>Works offline - Install as PWA</p>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="assets/js/game.js"></script>
+    <script type="module" src="assets/js/physics.js"></script>
+    <script type="module" src="assets/js/controls.js"></script>
+    <script type="module" src="assets/js/levels.js"></script>
+    <script type="module" src="assets/js/pwa.js"></script>
+</body>
+</html>
